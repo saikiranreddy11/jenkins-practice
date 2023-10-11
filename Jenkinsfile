@@ -7,7 +7,7 @@ pipeline {
         stage('Build') { 
             steps {
                 echo "building"
-                echo "This build stage form groovy script" > /tmp/build.txt
+                sh 'echo "This build stage form groovy script" > /tmp/build.txt'
             }
         }
         stage('Test') { 
