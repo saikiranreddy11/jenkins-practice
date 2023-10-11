@@ -18,6 +18,7 @@ pipeline {
         stage('Deploy') { 
             steps {
                 echo "deploying"
+                 error 'This stage failed because of an error condition.'
             }
         }
     }
