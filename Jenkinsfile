@@ -8,6 +8,11 @@ pipeline {
             steps {
                 echo "building"
                 sh 'echo "This build stage form groovy script" > /tmp/build.txt'
+                sh '''
+                ls -l
+                pwd
+                echo "this is web hook example"
+                '''
             }
         }
         stage('Test') { 
