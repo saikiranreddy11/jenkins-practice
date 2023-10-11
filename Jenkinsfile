@@ -1,9 +1,13 @@
 pipeline {
-    agent any 
+    //agent any
+    agent {
+        label 'AGENT_1'
+    } 
     stages {
         stage('Build') { 
             steps {
                 echo "building"
+                echo "This build stage form groovy script" > /tmp/build.txt
             }
         }
         stage('Test') { 
