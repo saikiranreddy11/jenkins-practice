@@ -115,9 +115,7 @@ pipeline {
                 sh "echo 'Deploying to ${params.TARGET_ENV} and the secret key is ${SECRET_API_KEY}'"
             }
         }
-    }
-
-    post {
+        post {
         success {
             echo "Build and test succeeded"
         }
@@ -131,4 +129,7 @@ pipeline {
             echo "Pipeline completed"
         }
     }
-}
+    }
+
+    
+
