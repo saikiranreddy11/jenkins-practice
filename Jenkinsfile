@@ -52,7 +52,13 @@ pipeline {
         // Use a secret text credential as an environment variable
         SECRET_API_KEY = credentials('ssh-auth')
     }
+      options {
+        timeout(time: 1, unit: 'HOURS') // Set a build timeout
+    }
 
+    triggers {
+        cron('* * * * *') // Trigger the build onevery minute
+    }
 
     parameters {
         choice(
