@@ -1,43 +1,108 @@
+// pipeline {
+//     //agent any
+//     agent {
+//         label 'AGENT'
+//     } 
+//     stages {
+//         stage('Build') { 
+//             steps {
+//                 echo "building"
+//                 sh 'echo "This build stage form groovy script" > /tmp/build.txt'
+//                 sh '''
+//                 ls -l
+//                 pwd
+//                 echo "this is web hook example"
+//                 '''
+//             }
+//         }
+//         stage('Test') { 
+//             steps {
+//                 echo "testing"
+//             }
+//         }
+//         stage('Deploy') { 
+//             steps {
+//                 echo "deploying"
+//                  //error 'This stage failed because of an error condition.'
+//             }
+//         }
+//     }
+//     post { 
+//         always { 
+//             echo 'I will always say Hello again!'
+//         }
+//         success{
+//             echo 'I will run when the job is success'
+//         }
+//         failure{
+//             echo 'I will run when the job is failure'
+//         }
+// }
+
+
+// }   
+
 pipeline {
-    //agent any
-    agent {
-        label 'AGENT'
-    } 
+    agent{
+        node{
+            label 'AGENT'
+        }
+    }
+
+    parameters {
+        choice(
+            name: 'TARGET_ENV',
+            choices: 'development\nstaging\nproduction',
+            description: 'Select the target environment for deployment'
+        )
+        booleanParam(
+            name: 'DEPLOY',
+            defaultValue: true,
+            description: 'Deploy the application after build'
+        )
+    }
+
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                echo "building"
-                sh 'echo "This build stage form groovy script" > /tmp/build.txt'
-                sh '''
-                ls -l
-                pwd
-                echo "this is web hook example"
-                '''
+                sh 'echo "Building the project"'
             }
         }
-        stage('Test') { 
+
+        stage('Test') {
             steps {
-                echo "testing"
+                sh 'echo "Running tests"'
             }
         }
-        stage('Deploy') { 
+
+        stage('Deploy') {
+            when {
+                expression {
+                    return params.DEPLOY && currentBuild.resultIsBetterOrEqualTo('SUCCESS')
+                }
+            }
             steps {
-                echo "deploying"
-                 //error 'This stage failed because of an error condition.'
+                input {
+                    message "Proceed with deployment to ${params.TARGET_ENV}?"
+                    ok "Deploy"
+                }
+                sh "echo 'Deploying to ${params.TARGET_ENV}'"
             }
         }
     }
-    post { 
-        always { 
-            echo 'I will always say Hello again!'
+
+    post {
+        success {
+            echo "Build and test succeeded"
         }
-        success{
-            echo 'I will run when the job is success'
+        failure {
+            echo "Build or test failed"
         }
-        failure{
-            echo 'I will run when the job is failure'
+        unstable {
+            echo "Build is unstable"
         }
+        always {
+            echo "Pipeline completed"
+        }
+    }
 }
-
-
-}   
