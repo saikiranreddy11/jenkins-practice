@@ -1,7 +1,7 @@
 pipeline {
     //agent any
     agent {
-        label 'AGENT_1'
+        label 'AGENT'
     } 
     stages {
         stage('Build') { 
@@ -38,5 +38,6 @@ pipeline {
             echo 'I will run when the job is failure'
         }
 }
+
 
 }   
