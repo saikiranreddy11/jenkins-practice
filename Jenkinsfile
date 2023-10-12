@@ -73,12 +73,12 @@ pipeline {
         )
     }
 
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Building the project"'
-            }
-        }
+    // stages {
+    //     stage('Build') {
+    //         steps {
+    //             sh 'echo "Building the project"'
+    //         }
+    //     }
      stage('Parallel Build and Test') {
             parallel {
                 stage('Build') {
@@ -94,11 +94,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'echo "Running tests"'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         sh 'echo "Running tests"'
+        //     }
+        // }
 
         stage('Deploy') {
             when {
