@@ -48,6 +48,11 @@ pipeline {
             label 'AGENT'
         }
     }
+     environment {
+        // Use a secret text credential as an environment variable
+        SECRET_API_KEY = credentials('ssh-auth')
+    }
+
 
     parameters {
         choice(
@@ -87,7 +92,7 @@ pipeline {
                 }
             steps {
             
-                sh "echo 'Deploying to ${params.TARGET_ENV}'"
+                sh "echo 'Deploying to ${params.TARGET_ENV} and the secret key is ${SECRET_API_KEY}'"
             }
         }
     }
