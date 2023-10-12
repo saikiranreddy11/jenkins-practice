@@ -79,6 +79,20 @@ pipeline {
                 sh 'echo "Building the project"'
             }
         }
+     stage('Parallel Build and Test') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        sh 'echo "Building in parallel"'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'echo "Testing in parallel"'
+                    }
+                }
+            }
+        }
 
         stage('Test') {
             steps {
