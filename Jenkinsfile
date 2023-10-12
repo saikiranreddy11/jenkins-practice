@@ -81,14 +81,12 @@ pipeline {
                     return params.DEPLOY && currentBuild.resultIsBetterOrEqualTo('SUCCESS')
                 }
             }
-            steps {
-                script{
-                input {
+            input {
                     message "Proceed with deployment to ${params.TARGET_ENV}?"
                     ok "Deploy"
                 }
-                }
-                
+            steps {
+            
                 sh "echo 'Deploying to ${params.TARGET_ENV}'"
             }
         }
