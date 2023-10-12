@@ -82,9 +82,11 @@ pipeline {
                 }
             }
             steps {
+                script{
                 input {
                     message "Proceed with deployment to ${params.TARGET_ENV}?"
                     ok "Deploy"
+                }
                 }
                 sh "echo 'Deploying to ${params.TARGET_ENV}'"
             }
