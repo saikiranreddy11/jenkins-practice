@@ -56,9 +56,9 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') // Set a build timeout
     }
 
-    triggers {
-        cron('* * * * *') // Trigger the build onevery minute
-    }
+    // triggers {
+    //     cron('* * * * *') // Trigger the build onevery minute
+    // }
 
     parameters {
         choice(
